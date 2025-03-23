@@ -1,4 +1,4 @@
-//////Pins Definitions//////
+//////Pins Definitions//////shilpa was here
 const int pin_led_0 = 7;                      // sets pin value for each led0 (far right)
 const int pin_led_1 = 6;                      // sets pin value for each led1
 const int pin_led_2 = 5;                      // sets pin value for each led2
