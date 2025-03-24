@@ -8,6 +8,36 @@ Digital multiple choice quiz game incorporating timers and interrupts
 The interrupt pin is attached to pin 2 due to its compatability with hardware interrupts. The rest of the function was initialized to the `interrupt()` function on the `CHANGE` mode, allowing triggers on both the rising and falling edge of the input: <br>
 `attachInterrupt(digitalPinToInterrupt(pin_input_interrupt), interrupt, CHANGE);`
 
+The hardware interrupt is tied to the pin coming out of a 4-input OR gate with the answer buttons as the input, therfore everytime a button is pushed or released, the interrupt is triggered
+```
+void interrupt(){
+  if(secondsCounterAnswer >= time_submit) {                               // Check if button has been held to submit 
+    getAnswerFlag = true;}                                                // Set flag to true to allow answer to be checked
+
+  if(end_reset == true){                                                  // Check if reset button is pressed
+    if(current_question > 10){                                            // Check if game is over
+      end_reset = false;                                                  // Ensure Rest button action is only triggered once
+      current_question = 1;                                               // Reset game to the beginnning
+      getAnswerFlag = false;                                              // Reset getAnswerFlag to false
+      secondsCounterSpent = 0;                                            // Reset counter for time spent on question                        
+      secondsCounterAnswer = 0;                                           // Reset everything to beginning states
+      right_answer = false;
+      question_asked = false;
+      end_stats_printed = false;
+      led_submit = true;
+      score_bonus_counter = 0;                                            // Resets bonus points collected 
+      score_correct_counter = 0;                                          // Resets correct answers
+      score_total = 0;                                                    // Resets total score value
+    }
+    
+    if(current_question < 10 && current_question > 1){                    // Check if reset buttons is pushed before game is over but passed question 1
+      end_reset = false;                                                  // Ensure Rest button action is only triggered once                                         
+      current_question = 11;                                              // Ends game
+      end_stats_printed = false;                                          // Triggers end stats to be printed 
+    }
+  }
+}
+```
 
 
 ### Timer Implementation
