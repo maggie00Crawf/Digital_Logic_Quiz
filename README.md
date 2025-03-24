@@ -55,6 +55,13 @@ void interrupt(){
 
 
 ### Timer Implementation
+The Timer was designed to increment every second.  This allows the rest of our code to be based off of a seconds counter running in the background. For example, the quiz time length is 30 seconds, the button pressing time required to submit an answer is 2 seconds, the time taken to answer the question is recorded in seconds, etc. <br>
+This was implemented by manipulating the OCR1A Compare Match value. <br>
+OCR1A calculation: {[ CLKSpeed / (Prescaler x DesiredInterruptSpeed) ] -1} : Where the Arduino clock speed (16 MHz), a prescaler of 1024, and setting desired frequency to 1. <br>
+The prescaler was set to 1024 by setting bits CS10 and CS12 to 1, corresponding to an encoding of 101. From the data sheets, we know "101" to be the encoding for a 1024 prescaler. This means that the timer will increment once for every 1024 clock cycles of the Arduino system clock. <br>
+The interrupt was enabled by setting the Waveform Generation Mode to "Clear Timer on Compare Match" (1 << WGM12). This clears the timer and restarts every time the top value (determined by OCR1A) is reached. <br>
+TIMSK1 is the register that controls enabling of interrupts on compare match. By setting OCIE1A to one, it enables the interrupt to trigger when a match occurs OCR1A value. <br>
+
 ```
   TCCR1A = 0; TCCR1B = 0;              // Clear Timer 1 control registers to ensure a clean setup
   TCNT1 = 0;                           // Reset Timer 1 counter to 0
