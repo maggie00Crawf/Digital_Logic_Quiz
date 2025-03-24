@@ -4,6 +4,20 @@ Digital multiple choice quiz game incorporating timers and interrupts
 
 ## Code Walkthrough
 
+### Quiz Set Up
+variables, questions, answers, booleans, time, score.....
+
+each question was stored in `const char questions[10][5]` in the following format storing the question and the possible answers for A, B, C, and D.
+```
+ {"Who is/are the best TA(s) in this class?",                            
+  "A: They both suck", "B: Marco", "C: Liam", "D: We have TAs?"}
+```
+The answers to each of these questions is stored in the `answer_key()` array, where each of the four values represents the state of each button (A, B, C, D) corresponding to the correct answer.
+```
+{0, 1, 1, 0}             // Answer is B and C
+```
+
+
 ### Interrupts
 The interrupt pin is attached to pin 2 due to its compatability with hardware interrupts. The rest of the function was initialized to the `interrupt()` function on the `CHANGE` mode, allowing triggers on both the rising and falling edge of the input: <br>
 `attachInterrupt(digitalPinToInterrupt(pin_input_interrupt), interrupt, CHANGE);`
