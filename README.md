@@ -1,10 +1,7 @@
-# Digital_Logic_Quiz
-Digital multiple choice quiz game incorporating timers and interrupts 
+# Code Walkthrough
 
 
-## Code Walkthrough
-
-### Quiz Set Up
+## Quiz Set Up
 variables, questions, answers, booleans, time, score.....
 
 each question was stored in `const char questions[10][5]` in the following format storing the question and the possible answers for A, B, C, and D.
@@ -18,7 +15,7 @@ The answers to each of these questions is stored in the `answer_key()` array, wh
 ```
 
 
-### Interrupts
+## Interrupts
 The interrupt pin is attached to pin 2 due to its compatability with hardware interrupts. The rest of the function was initialized to the `interrupt()` function on the `CHANGE` mode, allowing triggers on both the rising and falling edge of the input: <br>
 `attachInterrupt(digitalPinToInterrupt(pin_input_interrupt), interrupt, CHANGE);`
 
@@ -54,7 +51,7 @@ void interrupt(){
 ```
 
 
-### Timer Implementation
+## Timer Implementation
 The Timer was designed to increment every second.  This allows the rest of our code to be based off of a seconds counter running in the background. For example, the quiz time length is 30 seconds, the button pressing time required to submit an answer is 2 seconds, the time taken to answer the question is recorded in seconds, etc. <br>
 This was implemented by manipulating the OCR1A Compare Match value. <br>
 OCR1A calculation: {[ CLKSpeed / (Prescaler x DesiredInterruptSpeed) ] -1} : Where the Arduino clock speed (16 MHz), a prescaler of 1024, and setting desired frequency to 1. <br>
