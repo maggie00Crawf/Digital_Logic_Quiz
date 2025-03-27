@@ -114,6 +114,12 @@ void interrupt(){
 **TIMSK1**
 * (1 << OCIE1A) Enables Timer 1 Compare Match to be an interrupt
 
+#### Implementation
+The timer is used to increment the following variables:
+* secondsCounterSpent, which is compared with the time_limit_question determining when to move to the next question  `time_is_up()`
+* secondsCounterAnswer, which is compared with time_submit determining when to submit the answer value `get_right_answer()`
+* resets secondsCounterAnswer when signals from buttons are LOW
+
 
 ```
   TCCR1A = 0; TCCR1B = 0;              // Clear Timer 1 control registers to ensure a clean setup
