@@ -1,9 +1,35 @@
 # Code Walkthrough
 
+* [Hardware Logic](#hardware-logic) - Use of logic gates and additional circuit elements
+* [Parameter Set Up](#parameter-set-up) - boolean and array declaration
+* [Interrupts](#interrupts) - button-press interrupt
+* [Timer Implementation](#timer-implementation) - 1 second timer interrupt
+* [Functions](#functions) - Logic of software
 
-## Quiz Set Up
-variables, questions, answers, booleans, time, score.....
 
+## Hardware Logic
+![Logic Gates](images/Falstad_Logic_Schematic.jpg)
+### Answer Comparator
+Made up of a 2-Input XNOR gate and a 4-Input AND gate: <br>
+**_INPUTS_**: 4 button states, 4 corect answer states (HIGH or LOW)<br>
+**_OUTPUTS_**: Correct answer (HIGH or LOW)
+
+* XNOR- Takes the input of the input button state and the correct button state to check if they are the same or not (does this for all buttons)
+* AND- Takes 4 outputs from XNOR gate and checks if they are all outputs are the same
+### Button Interrupt
+Made up of a 4-Input OR gate: <br>
+**_INPUTS_**: 4 button states(HIGH or LOW)<br>
+**_OUTPUTS_**: Inperrupt pin (HIGH or LOW)
+
+* OR- Takes the inputs from all input buttons ot check if any have been pressed
+
+
+
+## Parameter Set Up
+* Volatile bool- 
+* 
+
+#### Answer Key
 each question was stored in `const char questions[10][5]` in the following format storing the question and the possible answers for A, B, C, and D.
 ```
  {"Who is/are the best TA(s) in this class?",                            
@@ -91,11 +117,8 @@ ISR(TIMER1_COMPA_vect) {                            // Defines Interrupt Timer
 ```
 
 
-
-
-
 ### Functions
 
 
-### Hardware
+
 
