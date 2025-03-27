@@ -87,9 +87,17 @@ void interrupt(){
 
 
 ## Timer Implementation
-* **TCCR1A = 0** : Clear Timer 1 control registers to ensure a clean setup
-* **TCCR1B = 0** : Clear Timer 1 control registers to ensure a clean setup
-* **TCNT1 = 0** : Reset Timer 1 counter to 0
+**TCCR1A**
+* Defines the timer mode
+* 0 = Normal Mode
+* 5, 6, 7, 14, 15 = Fast PMW Mode used for signal control
+* 1, 2, 3, 10, 11 = Smooth PMW Mode used for servo control
+
+**TCCR1B** 
+* Defines the prescaler
+* 
+
+**TCNT1 = 0** : Reset Timer 1 counter to 0
 * **OCR1A = 15624** : Set Output Compare Register A for 1-second interrupts
   * 16 MHz / 1024 prescaler = 15624
     * 1024 prescaler cooresponds to 1-seconds increment
