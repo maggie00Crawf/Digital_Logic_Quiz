@@ -93,27 +93,27 @@ void interrupt(){
 * 5, 6, 7, 14, 15 = Fast PMW Mode used for signal control
 * 1, 2, 3, 10, 11 = Smooth PMW Mode used for servo control
 
+**TCNT1** 
+* Timer counter- part that increments
+* Reset Timer 1 counter to 0 during setup
+
+**OCR1A**
+* Compare match value determines the number of cycles that need to occur before incrementing counter
+* Value determined by (Arduino Opperating Frequency)/(Prescler * Desired Interrupt frequency)-1
+* 15624 = (16 MHz)/(1024*1)-1
+
 **TCCR1B** 
-* Defines the prescaler
-* 
+* **CS**
+  * Defines the prescaler using CS12, CS11, CS10 as 3 selector bits
+  * (1 << CS12) | (1 << CS10) = 101 (001 = 1, 010 = 8, 011 = 64, 100 = 256, 101 = 1024)
+  * Chose 1024 since is the largest prescaler and will reduce the clock rate the most (intend to have 1-sec timer)
+* **WG**
+  * (1 << WGM12) = CTC Mode (Clear Timer on Compare Match)
+  * Every time OCR1A is reached, timer resets to 0 and continues counting
 
-**TCNT1 = 0** : Reset Timer 1 counter to 0
-* **OCR1A = 15624** : Set Output Compare Register A for 1-second interrupts
-  * 16 MHz / 1024 prescaler = 15624
-    * 1024 prescaler cooresponds to 1-seconds increment
-    * 16 MHz is the Arduino opperating frequency
-* **TCCR1B |= (1 << WGM12)** : Configure Timer 1 for CTC mode- Clears Timer on Compare Match
-* **TCCR1B |= (1 << CS12) | (1 << CS10)** : Set prescaler to 1024 (CS12 and CS10 bits)
-* **TIMSK1 |= (1 << OCIE1A)** : Enable Timer 1 Compare Match A interrupt
+**TIMSK1**
+* (1 << OCIE1A) Enables Timer 1 Compare Match to be an interrupt
 
-The Timer was designed to increment every second.  This allows the rest of our code to be based off of the seconds counter running in the background, **exaggerating the use of the non-default timer**.
-
-For example, the quiz time length is 30 seconds, the button pressing time required to submit an answer is 2 seconds, the time taken to answer the question is recorded in seconds, etc. <br>
-This was implemented by manipulating the OCR1A Compare Match value. <br>
-OCR1A calculation: {[ CLKSpeed / (Prescaler x DesiredInterruptSpeed) ] -1} : Where the Arduino clock speed (16 MHz), a prescaler of 1024, and setting desired frequency to 1. <br>
-The prescaler was set to 1024 by setting bits CS10 and CS12 to 1, corresponding to an encoding of 101. From the data sheets, we know "101" to be the encoding for a 1024 prescaler. This means that the timer will increment once for every 1024 clock cycles of the Arduino system clock. <br>
-The interrupt was enabled by setting the Waveform Generation Mode to "Clear Timer on Compare Match" (1 << WGM12). This clears the timer and restarts every time the top value (determined by OCR1A) is reached. <br>
-TIMSK1 is the register that controls enabling of interrupts on compare match. By setting OCIE1A to one, it enables the interrupt to trigger when a match occurs OCR1A value. <br>
 
 ```
   TCCR1A = 0; TCCR1B = 0;              // Clear Timer 1 control registers to ensure a clean setup
@@ -123,7 +123,7 @@ TIMSK1 is the register that controls enabling of interrupts on compare match. By
   TCCR1B |= (1 << CS12) | (1 << CS10); // Set prescaler to 1024 (CS12 and CS10 bits)
   TIMSK1 |= (1 << OCIE1A);             // Enable Timer 1 Compare Match A interrupt                        
 ```
-The Timer interrupt for the code is triggered every second (based off of the OCR1A value). 
+The timer interrupt function `TIMER1_COMPA_vect`for the code is triggered every second 
 
 ```
 ISR(TIMER1_COMPA_vect) {                            // Defines Interrupt Timer
@@ -147,8 +147,8 @@ ISR(TIMER1_COMPA_vect) {                            // Defines Interrupt Timer
 ```
 
 
-### Functions
-## Ask Question
+## Functions
+#### Ask Question
 
 ```
 void ask_question(){                                                      
@@ -161,7 +161,7 @@ void ask_question(){
 }
 ```
 
-## Get Right Answer
+#### Get Right Answer
 
 ```
 void get_right_answer(){                                                   // Function to check if submitted answer is correct
@@ -179,7 +179,7 @@ void get_right_answer(){                                                   // Fu
 }
 ```
 
-## Get Answer
+#### Get Answer
 
 ```
 void get_answer(){
@@ -205,7 +205,7 @@ void get_answer(){
 }
 ```
 
-## Print Quiz Stats
+#### Print Quiz Stats
 
 ```
 void print_quiz_stats(){                                                   // Stats displayed after each question 
@@ -225,7 +225,7 @@ void print_quiz_stats(){                                                   // St
 }
 ```
 
-## Reset Answer Pins
+#### Reset Answer Pins
 
 ```
 void reset_answer_pins(){
@@ -236,7 +236,7 @@ void reset_answer_pins(){
 }
 ```
 
-## Time is Up
+#### Time is Up
 
 ```
 void time_is_up(){                                          
@@ -251,7 +251,7 @@ void time_is_up(){
 } 
 ```
 
-## Update LED Timer
+#### Update LED Timer
 ```
 void update_led_timer() {
   if(secondsCounterSpent < time_limit_question) {                         // LED timer runs while time limit is not up
@@ -274,7 +274,7 @@ void update_led_timer() {
   }
 ```
 
-## Set LED
+#### Set LED
 
 ```
 void set_led(int led0, int led1, int led2, int led3){                     // Takes binary input (led0 = 1 or 0) to set leds
@@ -286,7 +286,7 @@ void set_led(int led0, int led1, int led2, int led3){                     // Tak
 ```
 
 
-## End of Quiz Stats
+#### End of Quiz Stats
 
 ```
 void end_of_quiz_stats(){
