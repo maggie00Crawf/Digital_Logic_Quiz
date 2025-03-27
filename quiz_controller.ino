@@ -89,7 +89,7 @@ volatile bool end_stats_printed = false;            // Flag to pint end of quiz 
 volatile bool led_submit = false;                   // Flag to indicate when the button has been held long enough 
 volatile bool end_reset = false;                    // Flag to indicate if end/reset button has been held for long enough
 
-//////Timer Setup//////
+//////Interrupt Setup//////
 ISR(TIMER1_COMPA_vect) {                            // Defines Interrupt Timer
   secondsCounterSpent++;                            // Increment time spent on question by 1 second
   if(secondsCounterSpent >= time_limit_question){   // Check if time limit has been reached
