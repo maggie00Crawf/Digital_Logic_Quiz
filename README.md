@@ -27,7 +27,7 @@ Made up of a 4-Input OR gate: <br>
 
 ## Parameter Set Up
 #### Variable types
-* **_Volatile bool_**- Allows for boolean flags to change unexpectedly (used for action flags)
+* **_Volatile bool_**- Allows for boolean flags to change unexpectedly by ISR (used for action flags); ensures the compiler follows the specified order in the code instead of optimizing read/write operations 
 * **_const int 2D array_**- interger array storing the button states corresponding to the correct answer
 * **_const char 2D array_** - text array to store questions, and each possible answer
 
