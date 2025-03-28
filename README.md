@@ -23,7 +23,7 @@
 
 
 ## Hardware Logic
-![Logic Gates](images/Falstad_Logic_Schematic.jpg)
+![Logic Gates](other/Falstad_Logic_Schematic.jpg)
 ### Answer Comparator
 Made up of a 2-Input XNOR gate and a 4-Input AND gate: <br>
 **_INPUTS_**: 4 button states, 4 corect answer states (HIGH or LOW)<br>
