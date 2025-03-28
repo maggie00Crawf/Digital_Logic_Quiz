@@ -1,10 +1,25 @@
 # Code Walkthrough
 
 * [Hardware Logic](#hardware-logic) - Use of logic gates and additional circuit elements
-* [Parameter Set Up](#parameter-set-up) - boolean and array declaration
-* [Interrupts](#interrupts) - button-press interrupt
+  * [Answer Comparator](#answer-comparator)
+  * [Button Interrupt](#button-interrupt)
+* [Parameter Set Up](#parameter-set-up) - Variable declarations
+  * [Variable Types](#variable-types)
+  * [Question Array](#question-array)
+  * [Answer Key](#answer-key)
+* [Interrupts](#interrupts) -Button press interrupt
 * [Timer Implementation](#timer-implementation) - 1 second timer interrupt
-* [Functions](#functions) - Logic of software
+* [Functions](#functions) - Logic of software loop
+  * [`ask_question()`](#ask-question)
+  * [`get_right_answer()`](#get-right-answer)
+  * [`get_answer()`](#get-answer)
+  * [`print_quiz_stats()`](#print-quiz-stats)
+  * [`reset_answer_pins()`](#reset-answer-pins)
+  * [`time_is_up()`](#time-is-up)
+  * [`update_led_timer()`](#update-led-timer)
+  * [`set_led()`](#set-led)
+  * [`end_of_quiz_stats()`](#end-of-quiz-stats)
+
 
 
 ## Hardware Logic
@@ -151,7 +166,6 @@ ISR(TIMER1_COMPA_vect) {                            // Defines Interrupt Timer
   }  
 } 
 ```
-
 
 ## Functions
 #### Ask Question
