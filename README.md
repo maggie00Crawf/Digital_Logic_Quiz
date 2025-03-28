@@ -1,8 +1,8 @@
 # Digital Logic Quiz
+* **datasheets** - Logic gate data sheets used in schematic
+* **other** - Images used in README and falstad .txt file for logic gate schematic
 * **README** - Code walkthrough and logic design
-* **Quiz Controller** - full Arduino code to run quiz game
-* **Datasheets** - Logic gate data sheets used in schematic
-* **Other** - Images used in README and falstad .txt file for logic gate schematic
+* **quiz_controller** - Full Arduino code to run quiz game 
 <br><br>
 
 # Code Walkthrough
